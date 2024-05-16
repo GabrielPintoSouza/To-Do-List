@@ -1,1 +1,4 @@
 <?php
+define('DSN', 'mysql:dbname=tododb;host=localhost');
+define('USER', 'root');
+define('PASSWORD', '');
