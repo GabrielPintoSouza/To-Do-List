@@ -1,5 +1,5 @@
 <?php
-    class ClienteDAO{
+    class UsuarioDAO{
         
     }
 ?>
