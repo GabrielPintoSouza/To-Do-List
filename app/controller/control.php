@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $obj = json_decode($json_data, true);
 
     // Verifica se os dados foram decodificados com sucesso
-    if (!$obj || empty($obj)) {
+    if ($obj && !empty($obj)) {
         $usuarioController = new UsuarioController();
         $usuarioController->registrar($obj['nome'], $obj['email'], $obj['senha']);
         http_response_code(200);

@@ -12,7 +12,7 @@ function cadastrar(ev) {
         return;
     }
 
-    const URL = "http://localhost/TO-DO-LIST/app/controller/control.php";
+    const URL = "http://localhost/To-Do-List/app/controller/control.php";
     fetch(URL,
         {
             method: 'POST',
