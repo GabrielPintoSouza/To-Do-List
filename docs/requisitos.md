@@ -1,6 +1,6 @@
 # Requisitos Sistema de Listagem de Tarefas:
 
-- Ser possível adicionar uma nova tarefa					
+- Ser possível adicionar uma nova tarefa
 - Ser possível criar repartições para alocar as tarefas
 - Cada usuário poder ter suas próprias repartições e tarefas
 - Poder determinar um tempo de execução para cada uma das tarefas

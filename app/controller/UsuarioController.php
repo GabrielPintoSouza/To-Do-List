@@ -4,7 +4,11 @@ require_once '../model/Usuario.php';
         /**
          * Recebe como parâmetros nome, email e senha, instancia um objeto do tipo Usuario chamando o seu respectivo método de registro
          */
-        public function registrar($nome, $email, $senha):void{
+        public function registrar():void{
+            $nome = $_POST['nome'];
+            $email = $_POST['email'];
+            $senha = $_POST['senha'];
+
             $usuario = new Usuario();
 
             $usuario->setNome($nome);

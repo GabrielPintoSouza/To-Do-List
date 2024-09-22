@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../public/js/cadastro.js"></script>
+    <!-- <script src="../public/js/cadastro.js"></script> -->
     <title>Página de cadastro</title>
 </head>
 <body>
     <h1>Formulário de Cadastro</h1>
-    <form>
-        <label for="nome" name="nome">Nome</label>
+    <form action="../controller/control.php" method="POST">
+        <label for="nome">Nome</label>
         <input type="text" name="nome" id="nome">
 
         <label for="email">E-mail</label>
@@ -21,6 +21,8 @@
         <label for="senha-confirm">Confirmação de senha</label>
         <input type="password" name="senha-confirm" id="senha-confirm">
         
+        <input type="hidden" name="controller" value="UsuarioController">
+        <input type="hidden" name="function" value="registrar">
         <button type="submit" id="cadastrar-usuario">Confirmar Cadastro</button>
     </form>
 </body>

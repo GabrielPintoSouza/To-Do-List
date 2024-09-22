@@ -1,23 +1,33 @@
 <?php
-//Arquivos necessários
-require_once 'UsuarioController.php';
+//Sanitizes the request parameters
+$controller = trim(htmlspecialchars($_REQUEST['controller']));
+$function = trim(htmlspecialchars($_REQUEST['function']));
 
-// Verifica se foi recebida uma solicitação POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Obtém os dados JSON do corpo da solicitação
-    $json_data = file_get_contents("php://input");
-
-    // Converte os dados JSON em um array associativo
-    $obj = json_decode($json_data, true);
-
-    // Verifica se os dados foram decodificados com sucesso
-    if ($obj && !empty($obj)) {
-        $usuarioController = new UsuarioController();
-        $usuarioController->registrar($obj['nome'], $obj['email'], $obj['senha']);
-        http_response_code(200);
-        exit('Cadastro realizado com sucesso!');
-    }else{
-        http_response_code(400);
-        exit('Falha na comunicação');
+try {
+    if (!$controller || !$function) {
+        throw new InvalidArgumentException('Operação Inválida, controladora e função não definidas');
     }
+
+    $controllerPath = $controller . '.php'; //Prepare the require path
+
+    if (!file_exists($controllerPath)) {
+        throw new InvalidArgumentException('Operação Inválida, arquivo da controladora inexistente');
+    }
+
+    require_once($controllerPath);
+
+    if (!class_exists($controller)) {
+        throw new InvalidArgumentException('Operação Inválida, controladora inexistente');
+    }
+
+    $controllerObject = new $controller(); //Instance the controller type object
+
+    if (!method_exists($controllerObject, $function)) {
+        throw new InvalidArgumentException('Operação Inválida, método inexistente');
+    }
+
+    $controllerObject->$function(); //Calls the controller function
+} catch (InvalidArgumentException $e) {
+    http_response_code(400);
+    exit("Erro: {$e->getMessage()}");
 }
