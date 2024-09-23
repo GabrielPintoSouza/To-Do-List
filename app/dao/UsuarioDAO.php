@@ -1,29 +1,26 @@
 <?php
     //Arquivos necessários
-    require_once 'ConexaoDAO.php';
+    require_once '../model/Usuario.php';
     class UsuarioDAO{
         //Atributos
         private PDO $pdo;
-        public function __construct()
+        
+        public function __construct(PDO $pdo)
         {
-            $this->pdo = ConexaoDAO::conectar();
+            $this->pdo = $pdo;
         }
 
         /**
-         * Recebe como parâmetros o nome, o email e a senha de um usuário a ser registrado no sistema
+         * Recebe como parâmetros um objeto do tipo Usuario e o registra no banco de dados da aplicação
          */
-        public function registrar(string $nome, string $email, string $senha){
-            try{
+        public function registrar(Usuario $usuario){
                 $insertUsuario = 'INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)';
 
                 $ps = $this->pdo->prepare($insertUsuario);
-                $ps->bindParam(':nome', $nome);
-                $ps->bindParam(':email', $email);
-                $ps->bindParam(':senha', $senha);
+                $ps->bindValue(':nome', $usuario->getNome());
+                $ps->bindValue(':email', $usuario->getEmail());
+                $ps->bindValue(':senha', $usuario->getSenha());
                 $ps->execute();
-            }catch(PDOException $e){
-
-            }
         }
     }
 ?>

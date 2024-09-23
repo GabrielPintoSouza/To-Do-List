@@ -1,7 +1,6 @@
 <?php
 //Arquivos necessários
 require_once 'Reparticao.php';
-require_once '../dao/UsuarioDAO.php';
 class Usuario
 {
     //Atributos
@@ -10,19 +9,14 @@ class Usuario
     private string $senha;
     private array $reparticoes;
 
-    //Métodos da lógica da aplicação
-
-    /**
-     * Pega os atributos de nome, email e senha e instancia um novo objeto do tipo UsuarioDAO, passando as informações para que ele realize o registro do usuário no sistema.
-     */
-    public function registrar()
+    public function __construct($nome, $email, $senha)
     {
-        try {
-            $usuarioDAO = new UsuarioDAO();
-            $usuarioDAO->registrar($this->nome, $this->email, password_hash($this->senha, PASSWORD_DEFAULT));
-        } catch (PDOException $e) {
-        }
+        $this->setNome($nome);
+        $this->setEmail($email);
+        $this->setSenha($senha);
     }
+
+    //Métodos da lógica da aplicação
 
     //Métodos acessores
 
@@ -65,7 +59,7 @@ class Usuario
      */
     public function setSenha(string $senha): void
     {
-        $this->senha = $senha;
+        $this->senha = password_hash($senha, PASSWORD_DEFAULT);
     }
 
     /**
