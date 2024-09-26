@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    require_once '../helper/Message.php';
+    $messageObject = new Message();
+    $message = $messageObject->getMessage()
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -7,6 +13,9 @@
     <title>Página de cadastro</title>
 </head>
 <body>
+    <?php if($message && !empty($message)):?>
+        <div class="message-container"><?=$message?></div>
+    <?php $messageObject->destroyMessage(); endif;?>
     <h1>Formulário de Cadastro</h1>
     <form action="../controller/control.php" method="POST">
         <label for="nome">Nome</label>
