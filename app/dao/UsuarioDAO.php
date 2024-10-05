@@ -22,5 +22,26 @@
                 $ps->bindValue(':senha', $usuario->getSenha());
                 $ps->execute();
         }
+
+        /**
+         * Returns a user with the same email as the parameter
+         */
+        public function getUserByEmail($email){
+            $getUser = 'SELECT * FROM usuarios WHERE email=:email';
+
+            $ps = $this->pdo->prepare($getUser);
+            $ps->bindParam(':email', $email);
+            $ps->execute();
+
+            if($ps->rowCount() === 0){
+                return null;
+            }
+
+            $data = $ps->fetch(PDO::FETCH_ASSOC);
+
+            $user = new Usuario($data['nome'], $data['email'], $data['senha']);
+
+            return $user;
+        }
     }
 ?>

@@ -33,4 +33,33 @@ class UsuarioController
             echo 'Erro: '.$e->getMessage();
         }
     }
+
+    public function autenticar(){
+        //Implementar funcionalidade de autenticação no sistema
+
+        //extrair dados da requisição
+        $email = trim(filter_input(INPUT_POST, 'email'));
+        $senha = trim(filter_input(INPUT_POST, 'password'));
+
+        if(!$email || empty($email)){
+            http_response_code(400);
+            //adicionar mensagem de feedback posteriormente
+            exit();
+        }
+
+        //Fazer busca do usuário por email
+        try{
+            $usuarioDao = new UsuarioDAO(ConexaoDAO::conectar());
+            $usuario = $usuarioDao->getUserByEmail($email);
+
+            print_r($usuario);
+        }catch(PDOException $e){
+            //Implementar tratamento de erro posteriormente
+            echo 'Erro: '.$e->getMessage();
+        }
+        //comparar as senhas
+
+        //atribuir id do usuário na session
+        echo 'Entrou';
+    }
 }
