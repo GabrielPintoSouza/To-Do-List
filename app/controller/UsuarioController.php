@@ -20,7 +20,7 @@ class UsuarioController
         $email = $_POST['email'];
         $senha = $_POST['senha'];
 
-        $usuario = new Usuario($nome, $email, $senha);
+        $usuario = new Usuario($nome, $email, Usuario::passwordHash($senha));
 
         try {
             $usuarioDao = new UsuarioDAO(ConexaoDAO::conectar());
@@ -36,14 +36,14 @@ class UsuarioController
 
     public function autenticar(){
         //Implementar funcionalidade de autenticação no sistema
-
+        session_start();
         //extrair dados da requisição
         $email = trim(filter_input(INPUT_POST, 'email'));
         $senha = trim(filter_input(INPUT_POST, 'password'));
 
         if(!$email || empty($email)){
             http_response_code(400);
-            //adicionar mensagem de feedback posteriormente
+            $this->messageObject->setMessage('Um e-mail deve ser fornecido.');
             exit();
         }
 
@@ -52,14 +52,23 @@ class UsuarioController
             $usuarioDao = new UsuarioDAO(ConexaoDAO::conectar());
             $usuario = $usuarioDao->getUserByEmail($email);
 
-            print_r($usuario);
+            if(is_null($usuario)){
+                $this->messageObject->setMessage('E-mail não cadastrado no sistema.');
+                exit();
+            }
+
+            //comparar as senhas
+            if(password_verify($senha, $usuario->getSenha())){
+                $_SESSION['userId'] = $usuario->getId();
+                $this->messageObject->setMessage("Bem vindo(a) {$usuario->getNome()}");
+                //redirecionar para a página de dashboard posteriormente
+            }else{
+                $this->messageObject->setMessage('A combinação de e-mail e senha fornecida não é válida.');
+                //redirecionar para a página de login posteriormente
+            }
         }catch(PDOException $e){
             //Implementar tratamento de erro posteriormente
             echo 'Erro: '.$e->getMessage();
         }
-        //comparar as senhas
-
-        //atribuir id do usuário na session
-        echo 'Entrou';
     }
 }

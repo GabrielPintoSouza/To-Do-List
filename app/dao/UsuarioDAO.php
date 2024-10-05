@@ -40,6 +40,7 @@
             $data = $ps->fetch(PDO::FETCH_ASSOC);
 
             $user = new Usuario($data['nome'], $data['email'], $data['senha']);
+            $user->setId($data['id']);
 
             return $user;
         }
