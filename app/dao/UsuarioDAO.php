@@ -1,7 +1,9 @@
 <?php
     //Arquivos necessários
     require_once '../model/Usuario.php';
-    class UsuarioDAO{
+    require_once '../dao/UsuarioDAOInterface.php';
+
+    class UsuarioDAO implements UsuarioDAOInterface{
         //Atributos
         private PDO $pdo;
         
@@ -26,7 +28,7 @@
         /**
          * Returns a user with the same email as the parameter
          */
-        public function getUserByEmail($email){
+        public function getUserByEmail(string $email){
             $getUser = 'SELECT * FROM usuarios WHERE email=:email';
 
             $ps = $this->pdo->prepare($getUser);

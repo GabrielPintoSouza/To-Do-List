@@ -3,13 +3,16 @@ require_once '../model/Usuario.php';
 require_once '../dao/UsuarioDAO.php';
 require_once '../dao/ConexaoDAO.php';
 require_once '../helper/Message.php';
+require_once '../dao/UsuarioDAOInterface.php';
 class UsuarioController
 {
     private $messageObject;
+    private $usuarioDao;
 
-    public function __construct()
+    public function __construct(UsuarioDAOInterface $usuarioDao)
     {
         $this->messageObject = new Message();
+        $this->usuarioDao = $usuarioDao;
     }
     /**
      * Recebe como parâmetros nome, email e senha, e realiza os procedimentos para registrar um usuário
@@ -23,8 +26,7 @@ class UsuarioController
         $usuario = new Usuario($nome, $email, Usuario::passwordHash($senha));
 
         try {
-            $usuarioDao = new UsuarioDAO(ConexaoDAO::conectar());
-            $usuarioDao->registrar($usuario);
+            $this->usuarioDao->registrar($usuario);
 
             session_start();
             $this->messageObject->setMessage('Usuário cadastrado com sucesso');
@@ -49,8 +51,7 @@ class UsuarioController
 
         //Fazer busca do usuário por email
         try{
-            $usuarioDao = new UsuarioDAO(ConexaoDAO::conectar());
-            $usuario = $usuarioDao->getUserByEmail($email);
+            $usuario = $this->usuarioDao->getUserByEmail($email);
 
             if(is_null($usuario)){
                 $this->messageObject->setMessage('E-mail não cadastrado no sistema.');
