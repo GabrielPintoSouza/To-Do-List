@@ -3,9 +3,9 @@ CREATE DATABASE tododb;
 USE tododb;
 
 -- Criação da tabela de usuários
-CREATE TABLE usuarios(
+CREATE TABLE users(
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(50),
+    name VARCHAR(50),
     email VARCHAR(100) UNIQUE,
-    senha VARCHAR(255)
+    password VARCHAR(255)
 );

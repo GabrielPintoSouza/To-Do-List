@@ -1,7 +1,7 @@
 <?php
 //Connection database
-require_once '../dao/ConexaoDAO.php';
-$pdo = ConexaoDAO::conectar();
+require_once '../dao/ConnectionDAO.php';
+$pdo = ConnectionDAO::connect();
 
 //Sanitizes the request parameters
 $controller = trim(htmlspecialchars($_REQUEST['controller']));
@@ -24,7 +24,7 @@ try {
         throw new InvalidArgumentException('Operação Inválida, controladora inexistente');
     }
 
-    $dao = str_replace('Controller', PERSISTENCE_SUFFIX, $controller); //Change 'DAO' to your class persistence class suffix
+    $dao = str_replace('Controller', PERSISTENCE_SUFFIX, $controller); //Change 'DAO' to your persistence class suffix
     $daoPath = '../dao/'.$dao.'.php';
 
     if (!file_exists($daoPath)) {
