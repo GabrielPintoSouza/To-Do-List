@@ -1,7 +1,7 @@
 <?php
     require_once '../../config.php';
-    class ConexaoDAO{
-        public static function conectar(){
+    class ConnectionDAO{
+        public static function connect(){
             try{
                 $pdo = new PDO(DSN, USER, PASSWORD);
                 return $pdo;
