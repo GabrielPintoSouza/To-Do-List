@@ -1,5 +1,6 @@
 <?php
-    session_start();
+    require_once '../helper/Session.php';
+    $sessionObject = new Session();
     require_once '../helper/Message.php';
     $messageObject = new Message();
     $message = $messageObject->getMessage()

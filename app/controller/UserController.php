@@ -3,15 +3,18 @@ require_once '../model/User.php';
 require_once '../dao/UserDAO.php';
 require_once '../dao/ConnectionDAO.php';
 require_once '../helper/Message.php';
+require_once '../helper/Session.php';
 require_once '../dao/UserDAOInterface.php';
 class UserController
 {
     private $messageObject;
+    private $sessionObject;
     private $userDAO;
 
     public function __construct(UserDAOInterface $userDAO)
     {
         $this->messageObject = new Message();
+        $this->sessionObject = new Session();
         $this->userDAO = $userDAO;
     }
     /**
@@ -28,7 +31,6 @@ class UserController
         try {
             $this->userDAO->register($user);
 
-            session_start();
             $this->messageObject->setMessage('Usuário cadastrado com sucesso');
         } catch (PDOException $e) {
             //Implement error handling later
@@ -38,7 +40,7 @@ class UserController
 
     public function auth(){
        //Implement authentication functionality in the system
-        session_start();
+
         //extract data from the request
         $email = trim(filter_input(INPUT_POST, 'email'));
         $password = trim(filter_input(INPUT_POST, 'password'));
@@ -60,7 +62,7 @@ class UserController
 
             //compare passwords
             if(password_verify($password, $user->getPassword())){
-                $_SESSION['userId'] = $user->getId();
+                $this->sessionObject->setUserId($user->getId());
                 $this->messageObject->setMessage("Bem vindo(a) {$user->getName()}");
                 //redirect to the dashboard page later
             }else{

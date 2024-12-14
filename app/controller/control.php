@@ -1,5 +1,6 @@
 <?php
-session_start();
+require_once '../helper/Session.php';
+$sessionObject = new Session();
 
 //Connection database
 require_once '../dao/ConnectionDAO.php';
@@ -53,7 +54,7 @@ try {
     }
 
     //Unauthenticated user
-    if(!isset($_SESSION['userId'])){
+    if($sessionObject->getUserId()){
         if(!in_array($function, $whiteList)){
             throw new InvalidArgumentException('Operação Inválida, usuário não autenticado', 403);
         }
