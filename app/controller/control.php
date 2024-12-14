@@ -54,7 +54,7 @@ try {
     }
 
     //Unauthenticated user
-    if($sessionObject->getUserId()){
+    if(!$sessionObject->getUserId()){
         if(!in_array($function, $whiteList)){
             throw new InvalidArgumentException('Operação Inválida, usuário não autenticado', 403);
         }

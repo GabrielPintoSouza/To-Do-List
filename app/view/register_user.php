@@ -1,9 +1,7 @@
 <?php
     require_once '../helper/Session.php';
     $sessionObject = new Session();
-    require_once '../helper/Message.php';
-    $messageObject = new Message();
-    $message = $messageObject->getMessage()
+    $message = $sessionObject->getMessage()
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -16,7 +14,7 @@
 <body>
     <?php if($message && !empty($message)):?>
         <div class="message-container"><?=$message?></div>
-    <?php $messageObject->destroyMessage(); endif;?>
+    <?php $sessionObject->destroyMessage(); endif;?>
     <h1>Formulário de Cadastro</h1>
     <form action="../controller/control.php" method="POST">
         <label for="name">Nome</label>
