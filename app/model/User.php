@@ -4,7 +4,7 @@ require_once 'Reparticao.php';
 class User
 {
     //Atributes
-    private string $id;
+    private int $id;
     private string $name;
     private string $email;
     private string $password;
