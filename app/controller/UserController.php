@@ -1,9 +1,10 @@
 <?php
-require_once '../model/User.php';
-require_once '../dao/UserDAO.php';
-require_once '../dao/ConnectionDAO.php';
-require_once '../helper/Session.php';
-require_once '../dao/UserDAOInterface.php';
+require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'model' . DIRECTORY_SEPARATOR . 'User.php';
+require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'dao' . DIRECTORY_SEPARATOR . 'UserDAO.php';
+require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'dao' . DIRECTORY_SEPARATOR . 'ConnectionDAO.php';
+require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'helper' . DIRECTORY_SEPARATOR . 'Session.php';
+require_once dirname(__FILE__, 2) . DIRECTORY_SEPARATOR . 'dao' . DIRECTORY_SEPARATOR . 'UserDAOInterface.php';
+
 class UserController
 {
     private $sessionObject;

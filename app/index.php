@@ -1,13 +1,13 @@
 <?php
-require_once '../helper/Session.php';
+require_once './helper/Session.php';
 $sessionObject = new Session();
 
 //Connection database
-require_once '../dao/ConnectionDAO.php';
+require_once './dao/ConnectionDAO.php';
 $pdo = ConnectionDAO::connect();
 
 //Verify type of the request
-$jsonRequest = (strpos($_SERVER['CONTENT_TYPE'], 'application/json') !=false ) ? json_decode(file_get_contents('php://input')) : false;
+$jsonRequest = (strpos($_SERVER['CONTENT_TYPE'], 'application/json') != false) ? json_decode(file_get_contents('php://input')) : false;
 
 //Verify existence of the parameters
 try {
@@ -30,7 +30,7 @@ try {
         throw new InvalidArgumentException('Operação Inválida, controladora e função inválidas.', 400);
     }
 
-    $controllerPath = $controller . '.php'; //Prepare the require path
+    $controllerPath = './controller/' . $controller . '.php'; //Prepare the require path
 
     if (!file_exists($controllerPath)) {
         throw new InvalidArgumentException('Operação Inválida, arquivo da controladora inexistente', 400);
@@ -43,7 +43,7 @@ try {
     }
 
     $dao = str_replace('Controller', PERSISTENCE_SUFFIX, $controller); //Change 'DAO' to your persistence class suffix
-    $daoPath = '../dao/' . $dao . '.php';
+    $daoPath = './dao/' . $dao . '.php';
 
     if (!file_exists($daoPath)) {
         throw new InvalidArgumentException('Operação Inválida, arquivo do dao inexistente', 400);

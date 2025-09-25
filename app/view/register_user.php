@@ -31,7 +31,7 @@ $message = $sessionObject->getMessage()
 
     <div class="div-register-form">
         <h1>Formulário de Cadastro</h1>
-        <form action="../controller/control.php" method="POST">
+        <form action="../index.php" method="POST">
 
             <div class="div-inputs">
                 <div class="input-form">

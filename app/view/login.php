@@ -21,7 +21,7 @@
 
         <h1>Formulário de acesso</h1>
 
-        <form action="../controller/control.php" method="post">
+        <form action="../index.php" method="post">
             <input type="hidden" name="controller" value="UserController">
             <input type="hidden" name="function" value="auth">
 
